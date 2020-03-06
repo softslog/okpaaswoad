@@ -132,7 +132,7 @@ func isSmallLetter(b byte) bool {
 	return b >= 'a' && b <= 'z'
 }
 
-func TestDigraph(t *testing.T) {
+func TestDigraphIsInvertible(t *testing.T) {
 	for k := 0; k < 256; k++ {
 		bits := byte(k)
 		d0, d1 := Digraph(bits)
