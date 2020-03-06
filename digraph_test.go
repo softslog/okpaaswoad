@@ -132,28 +132,36 @@ func isSmallLetter(b byte) bool {
 	return b >= 'a' && b <= 'z'
 }
 
+func testDigraphRoundTrip(t *testing.T, bits byte) {
+	d0, d1 := Digraph(bits)
+	if !isSmallLetter(d0) {
+		t.Errorf("Digraph d0=%q is not a small letter", d0)
+	}
+	if !isSmallLetter(d1) {
+		t.Errorf("Digraph d1=%q is not a small letter", d1)
+	}
+
+	if t.Failed() {
+		return
+	}
+
+	t.Logf("Attempting x%02x == decodeDigraph(%q, %q)", bits, d0, d1)
+	roundTrip, err := decodeDigraph(d0, d1, t)
+	if err != nil {
+		t.Errorf("decodeDigraph(%x => %d, %d) failed: %v ",
+			bits, d0, d1, err)
+		return
+	}
+	if roundTrip != bits {
+		t.Errorf("Digraph(%d) = (%c, %c) decodes to %d.",
+			bits, d0, d1, roundTrip)
+	}
+}
+
 func TestDigraphIsInvertible(t *testing.T) {
 	for k := 0; k < 256; k++ {
-		bits := byte(k)
-		d0, d1 := Digraph(bits)
-		if !isSmallLetter(d0) {
-			t.Errorf("Digraph d0=%q is not a small letter", d0)
-		}
-		if !isSmallLetter(d1) {
-			t.Errorf("Digraph d1=%q is not a small letter", d1)
-		}
-		t.Logf("Attempting x%x == decodeDigraph(%q, %q)", bits, d0, d1)
-		roundTrip, err := decodeDigraph(d0, d1, t)
-		if err != nil {
-			t.Errorf("decodeDigraph(%x => %d, %d) failed: %v ",
-				bits, d0, d1, err)
-		} else {
-			if int(roundTrip) != k {
-				t.Errorf("Digraph(%d) = (%c, %c) decodes to %d.",
-					bits, d0, d1, roundTrip)
-			} else {
-				t.Logf("GOOD x%x == decodeDigraph(%q, %q)", bits, d0, d1)
-			}
-		}
+		t.Run(fmt.Sprintf("%03d", k), func(subt *testing.T) {
+			testDigraphRoundTrip(subt, byte(k))
+		})
 	}
 }
