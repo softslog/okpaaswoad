@@ -9,5 +9,8 @@ fmt:
 	go fmt .
 	~/go/bin/goimports -w .
 
+install: test
+	go install ./okpw
+
 clean:
 
