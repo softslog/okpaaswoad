@@ -1,5 +1,7 @@
 .SUFFIXES:  # erase all the builtin rules
 
+all: test install
+
 .PHONY: test
 test: fmt
 	go test
