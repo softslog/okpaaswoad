@@ -1,3 +1,3 @@
-module github.com/ratnapala/okpaaswoad
+module github.com/adrianratnapala/okpaaswoad
 
 go 1.13

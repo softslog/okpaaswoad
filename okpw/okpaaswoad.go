@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/ratnapala/okpaaswoad"
+	"github.com/adrianratnapala/okpaaswoad"
 )
 
 var (
