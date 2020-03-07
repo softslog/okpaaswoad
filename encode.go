@@ -12,11 +12,7 @@ func Encode(bits []byte) string {
 
 func ReadAndEncode(r io.Reader, n int) (string, error) {
 	bits := make([]byte, n)
-	if nr, err := r.Read(bits); err == io.EOF {
-		if nr < n {
-			return "", io.ErrUnexpectedEOF
-		}
-	} else if err != nil {
+	if _, err := io.ReadFull(r, bits); err != nil {
 		return "", err
 	}
 

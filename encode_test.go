@@ -2,6 +2,7 @@ package okpaaswoad
 
 import (
 	"bytes"
+	"io"
 	"testing"
 )
 
@@ -31,4 +32,15 @@ func TestKnownPasswords(t *testing.T) {
 	knownPw(t, "amma", 00, 01)
 	knownPw(t, "aoauayeoeueyioiu", 0xf0, 0xf2, 0xf4, 0xf6, 0xf8, 0xfa, 0xfc, 0xfe)
 	knownPw(t, "msmzmrnsnznrlslz", 0xf1, 0xf3, 0xf5, 0xf7, 0xf9, 0xfb, 0xfd, 0xff)
+}
+
+func TestShortRead(t *testing.T) {
+	bits := []byte("short")
+	nentropy := len(bits) + 1
+	r := bytes.NewReader(bits)
+	if _, err := ReadAndEncode(r, nentropy); err != io.ErrUnexpectedEOF {
+		t.Errorf("reading %d bytes from %q should give "+
+			"io.ErrUnexpectedEOF, not %v",
+			nentropy, bits, err)
+	}
 }

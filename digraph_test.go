@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-type log interface {
+type tlog interface {
 	Log(args ...interface{})
 	Logf(format string, args ...interface{})
 }
@@ -87,7 +87,7 @@ func decodeVowelFirst(idx0 uint, d1 byte) (byte, error) {
 	}
 }
 
-func decodeDigraph(d0, d1 byte, l log) (byte, error) {
+func decodeDigraph(d0, d1 byte, l tlog) (byte, error) {
 	// If d0 is a vowel, hand off to decodeVowelFirst.
 	for idx0 := 0; idx0 < len(vowels); idx0++ {
 		if vowels[idx0] == d0 {
