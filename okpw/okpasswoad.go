@@ -24,19 +24,23 @@ func printDigraphTable(w io.Writer, permute func(int) int) {
 		log.Printf("%c, %c = Digraph(%d)", d0, d1, k)
 	}
 
-	ktitle := "                                second letter                                "
+	ktitle := "                                SECOND LETTER                                "
 	//         00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19
-	jtitle := "      first letter        "
+	jtitle := "      FIRST LETTER        "
 
-	fmt.Fprintf(w, "    %s\n   ", ktitle)
+	fmt.Fprintf(w, "    %s\n    ", ktitle)
 	for k := 0; k < 26; k++ {
 		fmt.Fprintf(w, " %c ", 'a'+permute(k))
 	}
-	w.Write([]byte{'\n'})
+	w.Write([]byte("\n    "))
+	for k := 0; k < 26; k++ {
+		w.Write([]byte("-+-"))
+	}
+	w.Write([]byte("\n"))
 
 	for j := 0; j < 26; j++ {
 		lj := permute(j)
-		fmt.Fprintf(w, "%c %c", jtitle[j], 'a'+lj)
+		fmt.Fprintf(w, "%c %c|", jtitle[j], 'a'+lj)
 
 		for k := 0; k < 26; k++ {
 			lk := permute(k)
