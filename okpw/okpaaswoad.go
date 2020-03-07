@@ -1,9 +1,11 @@
 package main
 
 import (
+	crypto_rand "crypto/rand"
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -15,6 +17,8 @@ var (
 	okOrder = flag.Bool("okorder", false,
 		"Actions (such as -dg-table) display okpaaswoard order.")
 	nEntropy = flag.Int("nentropy", 5, "Bytes of entropy to use.")
+	entropy  = flag.String("entropy", "",
+		"Source of entropy.  Default is crypto/rand, '-' is stdin.")
 )
 
 func printDigraphTable(w io.Writer, permute func(int) int) {
@@ -54,6 +58,17 @@ func printDigraphTable(w io.Writer, permute func(int) int) {
 	}
 }
 
+func openEntropy(name string) (io.ReadCloser, error) {
+	if name == "" {
+		return ioutil.NopCloser(crypto_rand.Reader), nil
+	}
+	if name == "-" {
+		return ioutil.NopCloser(os.Stdout), nil
+	}
+
+	return os.Open(name)
+}
+
 func main() {
 	flag.Parse()
 
@@ -69,7 +84,13 @@ func main() {
 		return
 	}
 
-	pw, err := okpaaswoad.ReadAndEncode(os.Stdin, *nEntropy)
+	src, err := openEntropy(*entropy)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer src.Close()
+
+	pw, err := okpaaswoad.ReadAndEncode(src, *nEntropy)
 	if err != nil {
 		log.Fatal(err)
 	}
