@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"log"
 	"os"
 
 	"github.com/ratnapala/okpaaswoad"
@@ -13,6 +14,7 @@ var (
 	dgTable = flag.Bool("dg-table", false, "Print all possible digraph encodings.")
 	okOrder = flag.Bool("okorder", false,
 		"Actions (such as -dg-table) display okpaaswoard order.")
+	nEntropy = flag.Int("nentropy", 5, "Bytes of entropy to use.")
 )
 
 func printDigraphTable(w io.Writer, permute func(int) int) {
@@ -67,6 +69,9 @@ func main() {
 		return
 	}
 
-	pw := okpaaswoad.Encode([]byte{146, 29, 6, 157, 16})
+	pw, err := okpaaswoad.ReadAndEncode(os.Stdin, *nEntropy)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Printf("%s\n", pw)
 }
