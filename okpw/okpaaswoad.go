@@ -4,16 +4,15 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"log"
 	"os"
 
 	"github.com/ratnapala/okpaaswoad"
 )
 
 var (
-	dgTable = flag.Bool("dg-table", false, "Print all possible digraph encodings")
+	dgTable = flag.Bool("dg-table", false, "Print all possible digraph encodings.")
 	okOrder = flag.Bool("okorder", false,
-		"Actions (such as -dg-table) display okpaaswoard orader")
+		"Actions (such as -dg-table) display okpaaswoard order.")
 )
 
 func printDigraphTable(w io.Writer, permute func(int) int) {
@@ -21,7 +20,6 @@ func printDigraphTable(w io.Writer, permute func(int) int) {
 	for k := 0; k < 256; k++ {
 		d0, d1 := okpaaswoad.Digraph(byte(k))
 		rmap[d0-'a'][d1-'a'] = uint16(k + 1)
-		log.Printf("%c, %c = Digraph(%d)", d0, d1, k)
 	}
 
 	ktitle := "                                SECOND LETTER                                "
