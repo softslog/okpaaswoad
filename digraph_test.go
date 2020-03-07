@@ -1,4 +1,4 @@
-package okpasswoad
+package okpaaswoad
 
 import (
 	"fmt"

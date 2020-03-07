@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 
-	okpasswoad "github.com/ratnapala/okpaaswoad"
+	"github.com/ratnapala/okpaaswoad"
 )
 
 var (
@@ -19,7 +19,7 @@ var (
 func printDigraphTable(w io.Writer, permute func(int) int) {
 	var rmap [26][26]uint16
 	for k := 0; k < 256; k++ {
-		d0, d1 := okpasswoad.Digraph(byte(k))
+		d0, d1 := okpaaswoad.Digraph(byte(k))
 		rmap[d0-'a'][d1-'a'] = uint16(k + 1)
 		log.Printf("%c, %c = Digraph(%d)", d0, d1, k)
 	}
@@ -70,7 +70,7 @@ func main() {
 	}
 
 	for _, b := range []byte{146, 29, 6, 157, 16} {
-		d0, d1 := okpasswoad.Digraph(b)
+		d0, d1 := okpaaswoad.Digraph(b)
 		fmt.Printf("%c%c\n", d0, d1)
 	}
 }

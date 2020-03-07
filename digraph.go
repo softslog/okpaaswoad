@@ -1,4 +1,4 @@
-package okpasswoad
+package okpaaswoad
 
 const (
 	vowels     = "aei" + "ouy"
