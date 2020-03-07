@@ -69,8 +69,6 @@ func main() {
 		return
 	}
 
-	for _, b := range []byte{146, 29, 6, 157, 16} {
-		d0, d1 := okpaaswoad.Digraph(b)
-		fmt.Printf("%c%c\n", d0, d1)
-	}
+	pw := okpaaswoad.Encode([]byte{146, 29, 6, 157, 16})
+	fmt.Printf("%s\n", pw)
 }
