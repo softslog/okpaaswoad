@@ -12,9 +12,11 @@ import (
 
 var (
 	dgTable = flag.Bool("dg-table", false, "Print all possible digraph encodings")
+	okOrder = flag.Bool("okorder", false,
+		"Actions (such as -dg-table) display okpaaswoard orader")
 )
 
-func printDigraphTable(w io.Writer) {
+func printDigraphTable(w io.Writer, permute func(int) int) {
 	var rmap [26][26]uint16
 	for k := 0; k < 256; k++ {
 		d0, d1 := okpasswoad.Digraph(byte(k))
@@ -28,15 +30,17 @@ func printDigraphTable(w io.Writer) {
 
 	fmt.Fprintf(w, "    %s\n   ", ktitle)
 	for k := 0; k < 26; k++ {
-		fmt.Fprintf(w, " %c ", 'a'+k)
+		fmt.Fprintf(w, " %c ", 'a'+permute(k))
 	}
 	w.Write([]byte{'\n'})
 
 	for j := 0; j < 26; j++ {
-		fmt.Fprintf(w, "%c %c", jtitle[j], 'a'+j)
+		lj := permute(j)
+		fmt.Fprintf(w, "%c %c", jtitle[j], 'a'+lj)
 
 		for k := 0; k < 26; k++ {
-			if r := rmap[j][k]; r == 0 {
+			lk := permute(k)
+			if r := rmap[lj][lk]; r == 0 {
 				fmt.Fprintf(w, " . ")
 			} else {
 				fmt.Fprintf(w, " %02x", r-1)
@@ -49,8 +53,15 @@ func printDigraphTable(w io.Writer) {
 func main() {
 	flag.Parse()
 
+	letterOrder := func(k int) int { return k }
+	if *okOrder {
+		letterOrder = func(k int) int {
+			return int("aeiouymnlszrbcdfghjkpqtvwx"[k] - 'a')
+		}
+	}
+
 	if *dgTable {
-		printDigraphTable(os.Stdout)
+		printDigraphTable(os.Stdout, letterOrder)
 		return
 	}
 
