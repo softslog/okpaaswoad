@@ -57,6 +57,11 @@ Install it with
 
         go get github.com/adrianratnapala/okpaaswoad
 
-And refer to the package documentaiton for further details.
+You can then generate passwords with
+
+        pw, err := okpaaswoad.ReadAndEncode(rand.Reader, bytesOfEntropy)
+
+See also [doc/example.go](doc/example.go) and refer to the package
+documentation for further details.
 
         go doc github.com/adrianratnapala/okpaaswoad

@@ -7,6 +7,7 @@ const (
 
 // Digraph encodes a single byte b into two consecutive letters of a password.
 // b should be random bits from some source such as the crypto/rand package.
+// Both return values are lower-case English letters.
 func Digraph(b byte) (byte, byte) {
 	r128 := uint(b) >> 1
 	cfbit := b & 1
