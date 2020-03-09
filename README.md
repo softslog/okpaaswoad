@@ -5,6 +5,9 @@ Author     : Adrian Ratnapala
 Get Source : git clone https://github.com/adrianratnapala/okpaaswoad.gitA
 More info  : https://github.com/adrianratnapala/
 
+Copyright (C) 2020, Adrian Ratnapala, under the ISC license. See file LICENSE.
+
+
 Okpaaswoad is a small tool and Go library (module) for generating strong
 random passwords, such as:
 
