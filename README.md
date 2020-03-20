@@ -2,7 +2,9 @@ Okpaaswoad generates random, humane passwords.
 ==============================================
 
 Author     : Adrian Ratnapala
+
 Get Source : git clone https://github.com/adrianratnapala/okpaaswoad.gitA
+
 More info  : https://github.com/adrianratnapala/
 
 Copyright (C) 2020, Adrian Ratnapala, under the ISC license. See file LICENSE.
@@ -38,15 +40,15 @@ Then you can just run it to write random passwords to standard output.
 By default `okpw` gets entropy from the `crypto/rand` Go package. You can
 choose any other source with the `-entropy` flag:
 
-        $ okpw -entropy=filaname-of-entropy-source
+        $ okpw -entropy=filename-of-entropy-source
 
 And `-` means standard input.  Thus:
 
-        $ okpw -entropy=filaname-of-entropy-source -entropy=- < /dev/urandom
+        $ okpw -entropy=filename-of-entropy-source -entropy=- < /dev/urandom
 
 and:
 
-        $ okpw -entropy=filaname-of-entropy-source -entropy=/dev/urandom
+        $ okpw -entropy=filename-of-entropy-source -entropy=/dev/urandom
 
 do the same thing.
 
